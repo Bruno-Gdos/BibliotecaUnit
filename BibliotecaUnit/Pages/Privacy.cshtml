@@ -1,0 +1,114 @@
+﻿@page
+@model PrivacyModel
+@{
+    ViewData["Title"] = "Livros";
+}
+
+
+<h1>Lista de Livros</h1>
+
+
+<p>
+    <button class="btn btn-primary" id="Create">Adicionar livro</button>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Livro
+            </th>
+            <th>
+                Upload
+            </th>
+            <th>Download</th>
+            <th>Deletar</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.Invoices)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <button class="btn btn-info"><a style="text-decoration:none; color:white;" onclick="Admin(@item.Id)" >Adicionar Livro</a></button>
+                </td>
+
+                @* asp-route-id="@item.Id" *@
+                <td>
+                    @if (item.Attachment != null)
+                    {
+                        <form asp-page-handler="Download" method="post" asp-route-id="@item.Id">
+                            <input type="submit" class="btn btn-dark" value="Download">
+
+                        </form>
+                    }
+
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+    $("#Create").click(function () {
+        var senha = "unitbr";
+
+        swal({
+            icon: "info",
+            title: "Para adicionar livros",
+            content: {
+                element: "input",
+                attributes: {
+                    placeholder: "Digite a senha aqui",
+                    type: "password",
+                },
+            },
+        })
+            .then((value) => {
+                if (value == senha) {
+                    window.location.href = "/Create";
+                } else {
+                    swal("Senha incorreta", "A senha está incorreta, tente novamente", "error");
+                }
+            });
+    });
+</script>
+
+<script>
+
+    function Admin(id){
+        var senha = "unitbr";
+
+        swal({
+            icon: "info",
+            title: "Para adicionar livros",
+            content: {
+                element: "input",
+                attributes: {
+                    placeholder: "Digite a senha aqui",
+                    type: "password",
+                },
+            },
+        })
+            .then((value) => {
+                if (value == senha) {
+                    window.location.href = "/Upload?id=" + id;
+                } else {
+                    swal("Senha incorreta", "A senha está incorreta, tente novamente", "error");
+                }
+            });
+    }
+
+</script>
+
+
+
