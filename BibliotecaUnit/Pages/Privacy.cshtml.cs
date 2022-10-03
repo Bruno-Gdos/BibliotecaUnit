@@ -57,20 +57,9 @@ namespace BibliotecaUnit.Pages
         public async Task<IActionResult> OnPostDeleteAsync(int? id)
         {
             var myInv = _databaseContext.Invoices.FirstOrDefault(x => x.Id == id);
-            if (myInv == null)
-            {
-                return NotFound();
-            }
-            if (myInv.Attachment == null)
-            {
-                return Page();
-            }
-            else
-            {
-                myInv.Attachment = null;
-                _databaseContext.Update(myInv);
+
+                _databaseContext.Remove(myInv);
                 await _databaseContext.SaveChangesAsync();
-            }
 
             Invoices = await _databaseContext.Invoices.ToListAsync();
             return Page();

@@ -22,7 +22,9 @@
                 Upload
             </th>
             <th>Download</th>
-            <th>Deletar</th>
+            <th>
+                Deletar
+            </th>
         </tr>
     </thead>
 
@@ -47,6 +49,12 @@
                         </form>
                     }
 
+                </td>
+                <td> 
+                    <button class="btn btn-danger" onclick="Delete(@item.Id)">Deletar</button>
+                    <form asp-page-handler="Delete" style="display:none ;" method="post" asp-route-id="@item.Id">
+                        <input type="submit" id="@item.Id" class="btn btn-warning" value="Excluir">
+                    </form> 
                 </td>
             </tr>
         }
@@ -110,5 +118,29 @@
 
 </script>
 
+<script>
+    function Delete(id) {
+        var senha = "unitbr";
+        
+        swal({
+            icon: "info",
+            title: "Para deletar o livro",
+            content: {
+                element: "input",
+                attributes: {
+                    placeholder: "Digite a senha aqui",
+                    type: "password",
+                },
+            },
+        })
+            .then((value) => {
+                if (value == senha) {
+                    document.getElementById(id).click();
+                } else {
+                    swal("Senha incorreta", "A senha está incorreta, tente novamente", "error");
+                }
+            });
+    }
+</script>
 
 
